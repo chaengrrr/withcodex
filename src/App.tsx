@@ -159,6 +159,8 @@ export default function App() {
     setWorkForm({
       ...createInitialWorkForm(settings),
       date: workForm.date,
+      startTime: workForm.startTime,
+      endTime: workForm.endTime,
       hourlyWage: workForm.hourlyWage,
       taxRate: workForm.taxRate,
       breakMinutes: workForm.breakMinutes,
