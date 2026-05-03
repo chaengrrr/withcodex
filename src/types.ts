@@ -44,6 +44,7 @@ export type Summary = {
 };
 
 export type AppSettings = {
+  settingsVersion?: number;
   breakMinutes: number;
   taxRate: number;
   hourlyWage: number;

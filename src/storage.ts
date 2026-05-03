@@ -11,12 +11,13 @@ const LEGACY_WORK_LOGS_KEY = "part-time-income-manager.workLogs";
 const LEGACY_TRANSACTIONS_KEY = "part-time-income-manager.moneyTransactions";
 
 export const defaultSettings: AppSettings = {
+  settingsVersion: 2,
   breakMinutes: 0,
   taxRate: 3.3,
-  hourlyWage: 10030,
-  nightPremiumEnabled: true,
+  hourlyWage: 10320,
+  nightPremiumEnabled: false,
   nightPremiumRate: 50,
-  weeklyHolidayEnabled: true,
+  weeklyHolidayEnabled: false,
 };
 
 function openDatabase() {
@@ -160,7 +161,19 @@ export const repository = {
     const settings = await transaction<AppSettings | undefined>(SETTINGS_STORE, "readonly", (store) =>
       store.get(SETTINGS_KEY),
     );
-    return { ...defaultSettings, ...settings };
+    const merged = { ...defaultSettings, ...settings };
+
+    if (!settings?.settingsVersion || settings.settingsVersion < 2) {
+      return {
+        ...merged,
+        settingsVersion: 2,
+        hourlyWage: settings?.hourlyWage === 10030 ? 10320 : merged.hourlyWage,
+        nightPremiumEnabled: false,
+        weeklyHolidayEnabled: false,
+      };
+    }
+
+    return merged;
   },
   async saveSettings(settings: AppSettings) {
     await transaction(SETTINGS_STORE, "readwrite", (store) => store.put(settings, SETTINGS_KEY));
