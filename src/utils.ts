@@ -9,7 +9,7 @@ export function today() {
 }
 
 export function toDateTime(date: string, time: string) {
-  return `${date}T${time}:00`;
+  return `${date}T${time}:00+09:00`;
 }
 
 export function calculateWorkHours(date: string, startTime: string, endTime: string) {
