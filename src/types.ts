@@ -6,6 +6,11 @@ export type WorkLog = {
   hourlyWage: number;
   taxRate: number;
   memo: string;
+  breakMinutes: number;
+  nightPremiumEnabled: boolean;
+  nightPremiumRate: number;
+  nightHours: number;
+  nightPremiumPay: number;
   workHours: number;
   grossPay: number;
   netPay: number;
@@ -35,4 +40,22 @@ export type Summary = {
   totalHours: number;
   totalGrossPay: number;
   totalNetPay: number;
+  weeklyHolidayPay: number;
+};
+
+export type AppSettings = {
+  breakMinutes: number;
+  taxRate: number;
+  hourlyWage: number;
+  nightPremiumEnabled: boolean;
+  nightPremiumRate: number;
+  weeklyHolidayEnabled: boolean;
+};
+
+export type BackupData = {
+  version: 1;
+  exportedAt: string;
+  workLogs: WorkLog[];
+  moneyTransactions: MoneyTransaction[];
+  settings: AppSettings;
 };

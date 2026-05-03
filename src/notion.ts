@@ -1,6 +1,11 @@
 import type { WorkLog } from "./types";
 import { toDateTime } from "./utils";
 
+async function readError(response: Response) {
+  const result = await response.json().catch(() => null);
+  return result?.error ?? "Notion 연동에 실패했습니다. 로컬 API 서버 설정을 확인하세요.";
+}
+
 export async function syncWorkLogToNotion(workLog: WorkLog) {
   const response = await fetch("/api/notion/work-logs", {
     method: "POST",
@@ -13,10 +18,20 @@ export async function syncWorkLogToNotion(workLog: WorkLog) {
   });
 
   if (!response.ok) {
-    throw new Error("Notion 동기화에 실패했습니다. 로컬 API 서버 설정을 확인하세요.");
+    throw new Error(await readError(response));
   }
 
-  return response.json() as Promise<{ notionPageId: string }>;
+  return response.json() as Promise<{ notionPageId: string; mode: "created" | "updated" }>;
+}
+
+export async function importWorkLogsFromNotion() {
+  const response = await fetch("/api/notion/work-logs");
+
+  if (!response.ok) {
+    throw new Error(await readError(response));
+  }
+
+  return response.json() as Promise<{ workLogs: WorkLog[] }>;
 }
 
 export const notionDatabaseDesign = [

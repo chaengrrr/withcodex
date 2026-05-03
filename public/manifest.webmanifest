@@ -1,0 +1,19 @@
+{
+  "name": "아르바이트 정산",
+  "short_name": "근무정산",
+  "description": "개인용 아르바이트 근무 시간, 급여, 정산 관리 앱",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f6f3",
+  "theme_color": "#226957",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
