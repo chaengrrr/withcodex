@@ -83,3 +83,30 @@ npm run dev
 ```
 
 앱에서 근무 기록을 저장한 뒤 해당 기록의 `Notion` 버튼을 누르면 Notion Database에 저장됩니다. 이미 동기화된 기록은 같은 Notion 페이지를 업데이트합니다.
+
+## Vercel 배포에서 Notion 연동
+
+모바일에서 Notion 동기화를 쓰려면 Vercel 프로젝트에 환경 변수를 추가해야 합니다.
+
+Vercel Dashboard에서:
+
+```txt
+Project Settings > Environment Variables
+```
+
+아래 값을 추가합니다.
+
+```env
+NOTION_API_KEY=ntn_xxx
+NOTION_WORK_LOG_DATA_SOURCE_ID=b1c98454-dd9e-406c-87fd-61c7eff8fe60
+```
+
+추가 후 Vercel에서 다시 배포하면 배포 주소의 `/api/notion/work-logs`가 Notion API를 호출합니다.
+
+확인 주소:
+
+```txt
+https://ptimemanagement.vercel.app/api/health
+```
+
+`notionConfigured`가 `true`이면 모바일 Notion 연동 준비가 된 상태입니다.
